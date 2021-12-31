@@ -1,26 +1,44 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { PokemonList, PokemonDetail } from './pokemon/Pokemon'
+import { useState } from 'react'
 
-function App() {
+const pokemon = [
+  'squirtle',
+  'wartortle',
+  'blastoise',
+  'caterpie',
+  'metapod',
+  'butterfree',
+  'weedle',
+  'kakuna',
+  'beedrill',
+  'pidgey',
+]
+const listPokemon = 'limit=10&offset=6'
+
+
+export default function App() {
+  const [pollingInterval, setPollingInterval] = useState(0)
+  const [detail, setDetail] = useState(false)
+
+
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <select
+        onChange={(change) => setPollingInterval(Number(change.target.value))}
+      >
+        <option value={0}>Off</option>
+        <option value={1000}>1s</option>
+        <option value={5000}>5s</option>
+      </select>
+      <div>
+        {detail && pokemon.map((poke, index) => (
+          <PokemonDetail key={index} name={poke} pollingInterval={pollingInterval} />
+        ))}
+        {!detail &&
+          <PokemonList filter={listPokemon} />
+        }
+      </div>
     </div>
-  );
+  )
 }
-
-export default App;
