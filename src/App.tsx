@@ -1,5 +1,7 @@
 import { PokemonList, PokemonDetail } from './pokemon/Pokemon'
 import { useState } from 'react'
+import { store } from './store'
+import { Provider } from 'react-redux'
 
 const pokemon = [
   'squirtle',
@@ -24,21 +26,23 @@ export default function App() {
 
   return (
     <div className="App">
-      <select
-        onChange={(change) => setPollingInterval(Number(change.target.value))}
-      >
-        <option value={0}>Off</option>
-        <option value={1000}>1s</option>
-        <option value={5000}>5s</option>
-      </select>
-      <div>
-        {detail && pokemon.map((poke, index) => (
-          <PokemonDetail key={index} name={poke} pollingInterval={pollingInterval} />
-        ))}
-        {!detail &&
-          <PokemonList filter={listPokemon} />
-        }
-      </div>
+      <Provider store={store}>
+        <select
+          onChange={(change) => setPollingInterval(Number(change.target.value))}
+        >
+          <option value={0}>Off</option>
+          <option value={1000}>1s</option>
+          <option value={5000}>5s</option>
+        </select>
+        <div>
+          {detail && pokemon.map((poke, index) => (
+            <PokemonDetail key={index} name={poke} pollingInterval={pollingInterval} />
+          ))}
+          {!detail &&
+            <PokemonList pollingInterval={pollingInterval} filter={listPokemon} />
+          }
+        </div>
+      </Provider>
     </div>
   )
 }

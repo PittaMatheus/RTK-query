@@ -1,5 +1,4 @@
 import { useGetPokemonByNameQuery, useGetPokemonListQuery } from '../services/pokemon'
-import { useState } from 'react'
 
 export const PokemonDetail = ({
   name,
@@ -15,8 +14,7 @@ export const PokemonDetail = ({
     }
   )
 
-  console.log("Detail")
-  console.log(data)
+
 
   return (
     <>
